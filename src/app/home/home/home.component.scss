@@ -1,0 +1,25 @@
+.example-card {
+    max-width: 400px;
+  }
+  
+  .example-header-image {
+    background-image: url('../../../assets/Profile_avatar.png');
+    background-size: cover;
+  }
+  mat-grid-tile {
+    background: rgb(221, 227, 230);
+  }
+  .example-button-container {
+    display: flex;
+    justify-content: center;
+    float: right;
+  }
+  .example-chip-list {
+    width: 100%;
+  }
+  .example-button-row {
+    display: table-cell;
+    margin: 8px 8px 8px 0;
+   
+  }
+  

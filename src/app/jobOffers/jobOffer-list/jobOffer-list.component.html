@@ -1,0 +1,46 @@
+<h1>Job Offers</h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Add Job Offer</a>
+    <input
+      type="text"
+      class="form-control"
+      name="searchText"
+      (input)="search($event.target.value)"
+      placeholder="Type to search..."
+      [(ngModel)]="searchText"
+    />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 30%">Job Title</th>
+            <th style="width: 30%">Job Description</th>
+            <th style="width: 30%">Post Date</th>
+            <th style="width: 30%">Deadline Date</th>
+            <th style="width: 30%">Job Profile</th>
+            <th style="width: 30%">Applicants Number</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let job of filteredJobs | searchFilter: searchText; index as i">
+            <td>{{job.jobTitle}}</td>
+            <td>{{job.jobDescription}}</td>
+            <td>{{job.postDate | date: 'dd-MM-yyyy'}}</td>
+            <td>{{job.deadlineDate | date: 'dd-MM-yyyy'}}</td>
+            <td>{{job.jobCategory}}</td>
+            <td>{{job.applicantsNo}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="edit/{{job.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                <button (click)="deleteJob(job.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="job.isDeleting">
+                    <span *ngIf="job.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!job.isDeleting">Delete</span>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!jobs">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

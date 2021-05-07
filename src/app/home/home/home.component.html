@@ -1,0 +1,51 @@
+<div class="p-4">
+    <div class="container">
+        <h1>Hi {{user.displayName}}!</h1>
+        <p>Here are some job offers!!</p>
+        <mat-form-field class="example-chip-list">
+            <mat-label>Job Profile</mat-label>
+            <mat-chip-list #jobList aria-label="Job selection">
+                <mat-chip *ngFor="let jobCategory of categories" [selectable]="selectable" [removable]="removable"
+                    (removed)="remove(jobCategory)">
+                    {{jobCategory}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="New jobCategory..." #jobInput [formControl]="jobCategoryCtrl"
+                    [matAutocomplete]="auto" [matChipInputFor]="jobList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let jobProfile of filteredCategories | async" [value]="jobProfile">
+                    {{jobProfile}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-grid-list cols="2" rowHeight="1:1.3">
+            <mat-grid-tile *ngFor="let job of FilteredJobs">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <div mat-card-avatar class="example-header-image"></div>
+                        <mat-card-title>{{job.jobTitle}}</mat-card-title>
+                        <mat-card-subtitle>Posted by {{job.username}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="../../assets/position-vacancy.jpg" alt="Photo of job position">
+                    <mat-card-content>
+                        <p>
+                            {{job.jobDescription}}
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <div class="example-button-row example-button-container">
+                            <button mat-mini-fab color="warn" (click)="AddFavorite(job.id)">
+                                <mat-icon>favorite</mat-icon>
+                            </button>
+                            <button  mat-mini-fab color="primary" (click)="openDialog(job.id)">
+                                <mat-icon>info</mat-icon>
+                            </button>
+                        </div>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+</div>
